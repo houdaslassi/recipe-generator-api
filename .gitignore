@@ -1,0 +1,62 @@
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Composer
+/vendor/
+composer.lock
+
+# IDE and editor files
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+.DS_Store
+
+# Logs
+*.log
+logs/
+storage/logs/
+
+# Cache
+.cache/
+*.cache
+
+# Build and deployment
+/build/
+/dist/
+/deploy/
+
+# Testing
+/coverage/
+.phpunit.result.cache
+
+# Dependencies
+/node_modules/
+/bower_components/
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.backup
+
+# System files
+Thumbs.db
+.DS_Store
+*.pid
+*.seed
+*.pid.lock
+
+# Database
+*.sqlite
+*.sqlite3
+*.db
+
+# Debug files
+*.debug
+*.dump
+*.stackdump 
