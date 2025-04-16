@@ -10,7 +10,9 @@
         "vlucas/phpdotenv": "^5.5",
         "doctrine/dbal": "^3.6",
         "firebase/php-jwt": "^6.4",
-        "monolog/monolog": "^3.3"
+        "monolog/monolog": "^3.3",
+        "openai-php/client": "^0.10.3",
+        "symfony/http-client": "^7.2"
     },
     "autoload": {
         "psr-4": {
@@ -23,5 +25,10 @@
             "email": "your.email@example.com"
         }
     ],
-    "minimum-stability": "stable"
-} 
+    "minimum-stability": "stable",
+    "config": {
+        "allow-plugins": {
+            "php-http/discovery": true
+        }
+    }
+}
