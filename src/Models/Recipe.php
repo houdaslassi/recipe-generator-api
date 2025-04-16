@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use PDO;
+use PDOException;
 
 class Recipe
 {
@@ -16,19 +17,38 @@ class Recipe
     public $created_at;
     public $updated_at;
 
-    public static function init(PDO $pdo)
+    public static function init()
     {
-        self::$pdo = $pdo;
+        try {
+            self::$pdo = new PDO(
+                "mysql:host=" . $_ENV['DB_HOST'] . ";dbname=" . $_ENV['DB_NAME'],
+                $_ENV['DB_USER'],
+                $_ENV['DB_PASS'],
+                [
+                    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                    PDO::ATTR_EMULATE_PREPARES => false,
+                ]
+            );
+        } catch (PDOException $e) {
+            die("Connection failed: " . $e->getMessage());
+        }
     }
 
     public static function all()
     {
+        if (!self::$pdo) {
+            self::init();
+        }
         $stmt = self::$pdo->query('SELECT * FROM recipes ORDER BY created_at DESC');
         return $stmt->fetchAll(PDO::FETCH_CLASS, self::class);
     }
 
     public static function find($id)
     {
+        if (!self::$pdo) {
+            self::init();
+        }
         $stmt = self::$pdo->prepare('SELECT * FROM recipes WHERE id = ?');
         $stmt->execute([$id]);
         return $stmt->fetchObject(self::class);
@@ -36,6 +56,9 @@ class Recipe
 
     public function save()
     {
+        if (!self::$pdo) {
+            self::init();
+        }
         if (isset($this->id)) {
             // Update
             $stmt = self::$pdo->prepare('
@@ -70,6 +93,9 @@ class Recipe
 
     public function delete()
     {
+        if (!self::$pdo) {
+            self::init();
+        }
         $stmt = self::$pdo->prepare('DELETE FROM recipes WHERE id = ?');
         $stmt->execute([$this->id]);
     }
