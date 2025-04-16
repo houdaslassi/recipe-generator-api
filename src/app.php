@@ -50,6 +50,7 @@ $app->group('/api/recipes', function ($group) {
     $group->post('', \App\Controllers\RecipeController::class . ':create');
     $group->put('/{id}', \App\Controllers\RecipeController::class . ':update');
     $group->delete('/{id}', \App\Controllers\RecipeController::class . ':delete');
+    $group->post('/generate', \App\Controllers\RecipeGeneratorController::class . ':generate');
 });
 
 return $app; 
